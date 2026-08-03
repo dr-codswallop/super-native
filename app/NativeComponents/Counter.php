@@ -6,13 +6,10 @@ use Illuminate\View\View;
 use Native\Mobile\Attributes\Poll;
 use Native\Mobile\Edge\Layouts\Builders\NavBarOptions;
 use Native\Mobile\Edge\NativeComponent;
-use Native\Mobile\Facades\Camera;
 
 class Counter extends NativeComponent
 {
     public $count = 0;
-
-    public $photo = '';
 
     /** Direction of an active press-and-hold: 'up', 'down', or null. */
     public ?string $holding = null;
@@ -80,13 +77,6 @@ class Counter extends NativeComponent
     {
         $delta = $this->holdTicks > 25 ? 5 : ($this->holdTicks > 8 ? 2 : 1);
         $this->count += $this->holding === 'down' ? -$delta : $delta;
-    }
-
-    public function testCamera()
-    {
-        Camera::getPhoto()->photoTaken(function ($photo) {
-            $this->photo = $photo->path;
-        });
     }
 
     public function navigationOptions(): ?NavBarOptions
